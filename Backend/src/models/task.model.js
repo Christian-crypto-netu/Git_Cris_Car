@@ -3,15 +3,20 @@ import mongoose from 'mongoose';
 const taskSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    require: true
   },
   description: {
     type: String,
-    required: true
+    require: true
   },
   date: {
     type: Date,
     default: Date.now
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    require: true
   }
 },{
   timestamps: true
