@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { loginRequest, registerRequest, verifiyTokenRequest } from "../api/auth";
-// import Cookies from 'js-cookie'; // Instalar Js - Cookie
+import Cookies from 'js-cookie'; // Instalar Js - Cookie
 
 export const AuthContext = createContext();
 
@@ -56,12 +56,12 @@ export const AuthProvider = ({ children }) => {
     }, [errors])
 
     useEffect(() => {
-        async function checkLogin()
-        {
+        async function checkLogin() {
         const cookies = Cookies.get();
 
         if(!cookies.token){
             setIsAuthenticated(false)
+            setLoading(false);
             return setUser(null)
         }
 
@@ -71,6 +71,7 @@ export const AuthProvider = ({ children }) => {
             if(!res.data){
                 setIsAuthenticated(false)
                 setLoading(false)
+                return;
             }
             setIsAuthenticated(true);
             setUser(res.data);
